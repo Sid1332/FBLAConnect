@@ -1,18 +1,32 @@
 package com.centrevillehs.fblaconnectv2
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-//VARIABLES (CAMEL CASED) (For now val, once we can change them then we do var, but idk how to do storage so)
-val firstName = "Sahir"
-val lastName = "Abrar"
-//END OF VARIABLES
-
 class MainActivity : AppCompatActivity() {
+    private var firstName = ""
+    private var lastName = ""
+    private var memberID = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Check if logged in
+        val prefs = getSharedPreferences("FBLAPrefs", MODE_PRIVATE)
+        firstName = prefs.getString("firstName", "") ?: ""
+        lastName = prefs.getString("lastName", "") ?: ""
+        memberID = prefs.getString("memberID", "") ?: ""
+
+        if (firstName.isEmpty()) {
+            // Not logged in, go to login screen
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
+
         setContentView(R.layout.activity_main)
 
         val contentText = findViewById<TextView>(R.id.contentText)
@@ -43,9 +57,9 @@ class MainActivity : AppCompatActivity() {
         textView.text = """
             📱 MEMBER PROFILE
             
-            Name: John Doe
+            Name: $firstName $lastName
             Chapter: Central High School
-            Member ID: 12345
+            Member ID: $memberID
             
             ✓ Event Calendar Access
             ✓ Competition Reminders
@@ -109,7 +123,7 @@ class MainActivity : AppCompatActivity() {
             📰 NEWS & UPDATES
             
             🔥 NEW: 2025-2026 Topics Released!
-            Mobile App Development competition 
+            Mobile App Development competition
             focuses on member engagement apps.
             
             📱 Recent Announcements:

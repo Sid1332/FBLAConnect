@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="40dp"
+    android:gravity="center"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FBLA Connect"
+        android:textSize="32sp"
+        android:textColor="@color/fbla_blue"
+        android:textStyle="bold"
+        android:layout_marginBottom="50dp" />
+
+    <EditText
+        android:id="@+id/editFirstName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="First Name"
+        android:inputType="textPersonName"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/editLastName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Last Name"
+        android:inputType="textPersonName"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/editMemberID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Member ID"
+        android:inputType="number"
+        android:padding="16dp"
+        android:layout_marginBottom="30dp" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textSize="18sp"
+        android:backgroundTint="@color/fbla_blue"
+        android:textColor="@color/white"
+        android:padding="16dp" />
+
+</LinearLayout>

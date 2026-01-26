@@ -4,19 +4,64 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView 
+    <ScrollView
         android:id="@+id/contentArea"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/contentText"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="40dp"
-            android:textSize="18sp"
-            android:text="Loading..." />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/contentText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="40dp"
+                android:textSize="18sp"
+                android:text="Loading..." />
+
+            <LinearLayout
+                android:id="@+id/socialMediaButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="20dp"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/btnInstagram"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="📷 Instagram"
+                    android:layout_margin="5dp"
+                    android:backgroundTint="@color/fbla_blue" />
+
+                <Button
+                    android:id="@+id/btnTwitter"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="🐦 Twitter"
+                    android:layout_margin="5dp"
+                    android:backgroundTint="@color/fbla_blue" />
+
+                <Button
+                    android:id="@+id/btnFacebook"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="👍 Facebook"
+                    android:layout_margin="5dp"
+                    android:backgroundTint="@color/fbla_blue" />
+            </LinearLayout>
+
+        </LinearLayout>
+
     </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

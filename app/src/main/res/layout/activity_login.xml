@@ -1,56 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="40dp"
-    android:gravity="center"
-    android:background="@color/white">
+    android:fillViewport="true"
+    android:background="#F5F5F5">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FBLA Connect"
-        android:textSize="32sp"
-        android:textColor="@color/fbla_blue"
-        android:textStyle="bold"
-        android:layout_marginBottom="50dp" />
-
-    <EditText
-        android:id="@+id/editFirstName"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="First Name"
-        android:inputType="textPersonName"
-        android:padding="16dp"
-        android:layout_marginBottom="16dp" />
+        android:orientation="vertical"
+        android:padding="32dp"
+        android:gravity="center_horizontal">
 
-    <EditText
-        android:id="@+id/editLastName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Last Name"
-        android:inputType="textPersonName"
-        android:padding="16dp"
-        android:layout_marginBottom="16dp" />
+        <!-- FBLA Logo Placeholder - Replace with actual logo later -->
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="30dp"
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="FBLA Logo" />
 
-    <EditText
-        android:id="@+id/editMemberID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Member ID"
-        android:inputType="number"
-        android:padding="16dp"
-        android:layout_marginBottom="30dp" />
+        <!-- Welcome Text -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome"
+            android:textSize="32sp"
+            android:textColor="#4A4A4A"
+            android:fontFamily="sans-serif-light" />
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:textSize="18sp"
-        android:backgroundTint="@color/fbla_blue"
-        android:textColor="@color/white"
-        android:padding="16dp" />
+        <!-- Back! Text -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back!"
+            android:textSize="32sp"
+            android:textColor="@color/fbla_blue"
+            android:textStyle="bold"
+            android:layout_marginBottom="40dp" />
 
-</LinearLayout>
+        <!-- Email Address Input -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/input_background"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/iconEmail"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_dialog_email"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="Email Icon" />
+
+            <EditText
+                android:id="@+id/editEmail"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="Email Address"
+                android:inputType="textEmailAddress"
+                android:background="@android:color/transparent"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!-- Password Input -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/input_background"
+            android:padding="16dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/iconPassword"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_lock_lock"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="Password Icon" />
+
+            <EditText
+                android:id="@+id/editPassword"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:background="@android:color/transparent"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iconTogglePassword"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_view"
+                android:layout_marginStart="12dp"
+                android:contentDescription="Toggle Password Visibility" />
+        </LinearLayout>
+
+        <!-- Remember me checkbox -->
+        <CheckBox
+            android:id="@+id/checkRemember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remember for 30 days"
+            android:textSize="14sp"
+            android:layout_gravity="start"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Login Button -->
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="LOG IN"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="#2C3E50"
+            android:textColor="@color/white"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Forgot Password -->
+        <TextView
+            android:id="@+id/txtForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forgot Password?"
+            android:textColor="@color/fbla_blue"
+            android:textSize="14sp"
+            android:layout_marginBottom="40dp" />
+
+        <!-- Spacer -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Sign Up Section -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Don't have an account? "
+                android:textSize="14sp"
+                android:textColor="#6A6A6A" />
+
+            <TextView
+                android:id="@+id/txtSignUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign up"
+                android:textSize="14sp"
+                android:textColor="@color/fbla_blue"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

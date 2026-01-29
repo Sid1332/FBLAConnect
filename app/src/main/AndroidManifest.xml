@@ -12,9 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FblaConnectV2">
 
-        <!-- Login Activity - This launches first -->
+        <!-- Welcome Activity - This launches FIRST -->
         <activity
-            android:name=".LoginActivity"
+            android:name=".WelcomeActivity"
             android:exported="true"
             android:theme="@style/Theme.FblaConnectV2">
             <intent-filter>
@@ -22,6 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Login Activity -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FblaConnectV2" />
 
         <!-- Main Activity - Opens after login -->
         <activity

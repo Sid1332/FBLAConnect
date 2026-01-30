@@ -3,10 +3,7 @@ package com.centrevillehs.fblaconnectv2
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.CalendarView
-import android.widget.LinearLayout
-import android.widget.ScrollView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.centrevillehs.fblaconnectv2.ui.main.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -15,6 +12,7 @@ class MainActivity : AppCompatActivity() {
     var firstName = ""
     var lastName = ""
     var memberID = ""
+    var isAdmin = true // Temporary admin status
 
     private lateinit var dashboardView: ScrollView
     private lateinit var calendarContainer: LinearLayout
@@ -23,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var socialMediaButtons: LinearLayout
     private lateinit var calendarView: CalendarView
     private lateinit var eventDetailsText: TextView
+    private lateinit var addEventView: ScrollView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         socialMediaButtons = findViewById(R.id.socialMediaButtons)
         calendarView = findViewById(R.id.calendarView)
         eventDetailsText = findViewById(R.id.eventDetailsText)
+        addEventView = findViewById(R.id.addEventView)
 
         // Setup Header
         val txtUserName = findViewById<TextView>(R.id.txtUserName)
@@ -72,6 +72,36 @@ class MainActivity : AppCompatActivity() {
         }
         findViewById<LinearLayout>(R.id.categorySocial).setOnClickListener {
             openUrl("https://www.fbla.org/social-media/")
+        }
+
+        // Admin Only Section
+        val categoryAddEvent = findViewById<LinearLayout>(R.id.categoryAddEvent)
+        if (isAdmin) {
+            categoryAddEvent.visibility = View.VISIBLE
+            categoryAddEvent.setOnClickListener {
+                showAddEventView()
+            }
+        } else {
+            categoryAddEvent.visibility = View.GONE
+        }
+
+        // Add Event Form Logic
+        val editEventName = findViewById<EditText>(R.id.editEventName)
+        val editEventDate = findViewById<EditText>(R.id.editEventDate)
+        val editEventDescription = findViewById<EditText>(R.id.editEventDescription)
+        val btnSaveEvent = findViewById<Button>(R.id.btnSaveEvent)
+
+        btnSaveEvent.setOnClickListener {
+            val name = editEventName.text.toString().trim()
+            val date = editEventDate.text.toString().trim()
+            val description = editEventDescription.text.toString().trim()
+
+            if (name.isEmpty() || date.isEmpty() || description.isEmpty()) {
+                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Event '$name' saved!", Toast.LENGTH_SHORT).show()
+                showDashboardView()
+            }
         }
 
         // Setup Bottom Navigation
@@ -98,6 +128,7 @@ class MainActivity : AppCompatActivity() {
         dashboardView.visibility = View.GONE
         calendarContainer.visibility = View.GONE
         contentArea.visibility = View.GONE
+        addEventView.visibility = View.GONE
     }
 
     private fun showDashboardView() {
@@ -123,5 +154,10 @@ class MainActivity : AppCompatActivity() {
     private fun showResourcesView() {
         hideAll()
         showResources(contentText, socialMediaButtons, contentArea, calendarContainer)
+    }
+
+    private fun showAddEventView() {
+        hideAll()
+        addEventView.visibility = View.VISIBLE
     }
 }

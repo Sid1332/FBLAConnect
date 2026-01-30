@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.centrevillehs.fblaconnectv2" />
+                  <option name="mobileSdkAppId" value="1:501152153352:android:d70be90e3b2b6a444676bd" />
+                  <option name="projectId" value="fblaconnectdb" />
+                  <option name="projectNumber" value="501152153352" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

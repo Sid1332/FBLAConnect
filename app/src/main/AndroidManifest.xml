@@ -22,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- Register Activity - NEW -->
+        <!-- Register Activity -->
         <activity
             android:name=".RegisterActivity"
             android:exported="false"
@@ -30,6 +30,12 @@
         <!-- Login Activity -->
         <activity
             android:name=".LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FblaConnectV2" />
+
+        <!-- Add Event Activity -->
+        <activity
+            android:name=".AddEventActivity"
             android:exported="false"
             android:theme="@style/Theme.FblaConnectV2" />
 

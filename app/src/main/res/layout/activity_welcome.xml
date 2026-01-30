@@ -1,75 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="#F0F0F0"
-    android:padding="32dp">
+    android:background="@color/welcome_bg">
 
-    <!-- FBLA Logo Placeholder -->
+    <!-- World Map Watermark Background -->
     <ImageView
-        android:id="@+id/imgWelcomeLogo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="60dp"
-        android:src="@mipmap/ic_launcher"
-        android:contentDescription="FBLA Logo" />
-
-    <!-- FBLA Text -->
-    <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/imgWorldMap"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="FBLA"
-        android:textSize="24sp"
-        android:textColor="@color/fbla_blue"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="40dp" />
+        android:layout_centerInParent="true"
+        android:alpha="1"
+        android:scaleType="fitCenter"
+        android:scaleX="3"
+        android:scaleY="3"
+        android:src="@drawable/world_map_bg" />
 
-    <!-- Spacer to push content to center -->
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="40dp">
 
-    <!-- Let's Get Started! -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Let's Get Started!"
-        android:textSize="28sp"
-        android:textColor="#2C3E50"
-        android:textStyle="normal"
-        android:layout_marginBottom="40dp" />
+        <!-- FBLA Logo -->
+        <ImageView
+            android:id="@+id/imgWelcomeLogo"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/fbla_logo" />
 
-    <!-- SIGN IN Button -->
-    <Button
-        android:id="@+id/btnSignIn"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="SIGN IN"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/fbla_gold"
-        android:layout_marginBottom="16dp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-    <!-- REGISTER Button -->
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="REGISTER"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/fbla_gold" />
+        <!-- Let's Get Started Text -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
 
-    <!-- Spacer at bottom -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway"
+                android:text="Let’s Get"
+                android:textColor="@color/heading_text_grey"
+                android:textSize="64sp" />
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/txtStarted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway"
+                android:text="Started!"
+                android:textColor="@color/heading_text_grey"
+                android:textSize="64sp"
+                android:textStyle="bold"
+                android:layout_marginTop="-10dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.2" />
+
+        <!-- SIGN IN Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/button_background_gold"
+            android:text="SIGN IN"
+            android:textAllCaps="true"
+            android:textColor="@color/button_text_grey"
+            android:textSize="18sp"
+            android:fontFamily="@font/raleway"
+            android:textStyle="bold" />
+
+        <!-- REGISTER Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/button_background_gold"
+            android:text="REGISTER"
+            android:textAllCaps="true"
+            android:textColor="@color/button_text_grey"
+            android:textSize="18sp"
+            android:fontFamily="@font/raleway"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</RelativeLayout>

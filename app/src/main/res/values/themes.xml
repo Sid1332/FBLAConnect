@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.FblaConnectV2" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.FblaConnectV2" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/fbla_blue</item>
         <item name="colorPrimaryDark">@color/fbla_blue</item>
         <item name="colorAccent">@color/fbla_gold</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
     </style>
 </resources>

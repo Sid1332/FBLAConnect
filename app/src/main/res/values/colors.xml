@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="fbla_blue">#003B5C</color>
-    <color name="fbla_gold">#FFB81C</color>
+    <color name="fbla_gold">#FFD54F</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="button_text_grey">#546E7A</color>
+    <color name="heading_text_grey">#607D8B</color>
+    <color name="welcome_bg">#E9EBED</color>
 </resources>

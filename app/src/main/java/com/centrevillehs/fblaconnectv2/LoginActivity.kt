@@ -67,9 +67,10 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this, "Password reset coming soon!", Toast.LENGTH_SHORT).show()
         }
 
-        // Sign up click (placeholder)
+        // Sign up click - goes to RegisterActivity
         txtSignUp.setOnClickListener {
-            Toast.makeText(this, "Sign up coming soon!", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, RegisterActivity::class.java))
+            finish()
         }
     }
 }

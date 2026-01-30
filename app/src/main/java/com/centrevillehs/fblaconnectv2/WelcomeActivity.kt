@@ -3,7 +3,6 @@ package com.centrevillehs.fblaconnectv2
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class WelcomeActivity : AppCompatActivity() {
@@ -19,9 +18,15 @@ class WelcomeActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
         }
 
-        // Register button - placeholder for now
+        // Register button - goes to registration screen
         btnRegister.setOnClickListener {
-            Toast.makeText(this, "Registration coming soon!", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 }
+
+
+
+
+
+

@@ -84,7 +84,7 @@
                 android:id="@+id/iconPassword"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@android:drawable/ic_lock_lock"
+                android:src="@android:drawable/ic_lock_idle_lock"
                 android:layout_marginEnd="12dp"
                 android:contentDescription="Password Icon" />
 

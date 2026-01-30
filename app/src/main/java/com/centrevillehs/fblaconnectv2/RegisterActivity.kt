@@ -1,0 +1,108 @@
+package com.centrevillehs.fblaconnectv2
+
+import android.content.Intent
+import android.os.Bundle
+import android.text.InputType
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class RegisterActivity : AppCompatActivity() {
+    private var passwordVisible = false
+    private var confirmPasswordVisible = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_register)
+
+        val editUsername = findViewById<EditText>(R.id.editUsername)
+        val editEmail = findViewById<EditText>(R.id.editRegisterEmail)
+        val editPassword = findViewById<EditText>(R.id.editRegisterPassword)
+        val editConfirmPassword = findViewById<EditText>(R.id.editConfirmPassword)
+        val btnRegister = findViewById<Button>(R.id.btnRegister)
+        val txtSignIn = findViewById<TextView>(R.id.txtSignIn)
+        val iconTogglePassword = findViewById<ImageView>(R.id.iconToggleRegisterPassword)
+        val iconToggleConfirm = findViewById<ImageView>(R.id.iconToggleConfirmPassword)
+
+        // Toggle password visibility
+        iconTogglePassword.setOnClickListener {
+            passwordVisible = !passwordVisible
+            if (passwordVisible) {
+                editPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            } else {
+                editPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            }
+            editPassword.setSelection(editPassword.text.length)
+        }
+
+        // Toggle confirm password visibility
+        iconToggleConfirm.setOnClickListener {
+            confirmPasswordVisible = !confirmPasswordVisible
+            if (confirmPasswordVisible) {
+                editConfirmPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            } else {
+                editConfirmPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            }
+            editConfirmPassword.setSelection(editConfirmPassword.text.length)
+        }
+
+        // Register button
+        btnRegister.setOnClickListener {
+            val username = editUsername.text.toString().trim()
+            val email = editEmail.text.toString().trim()
+            val password = editPassword.text.toString()
+            val confirmPassword = editConfirmPassword.text.toString()
+
+            // Validation
+            when {
+                username.isEmpty() -> {
+                    Toast.makeText(this, "Please enter a username", Toast.LENGTH_SHORT).show()
+                }
+                email.isEmpty() -> {
+                    Toast.makeText(this, "Please enter an email", Toast.LENGTH_SHORT).show()
+                }
+                !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                    Toast.makeText(this, "Please enter a valid email", Toast.LENGTH_SHORT).show()
+                }
+                password.isEmpty() -> {
+                    Toast.makeText(this, "Please enter a password", Toast.LENGTH_SHORT).show()
+                }
+                password.length < 6 -> {
+                    Toast.makeText(this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show()
+                }
+                confirmPassword.isEmpty() -> {
+                    Toast.makeText(this, "Please confirm your password", Toast.LENGTH_SHORT).show()
+                }
+                password != confirmPassword -> {
+                    Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    // Registration successful - save to SharedPreferences
+                    val prefs = getSharedPreferences("FBLAPrefs", MODE_PRIVATE)
+                    prefs.edit().apply {
+                        putString("firstName", username) // Using username as firstName for now
+                        putString("lastName", "")
+                        putString("memberID", "NEW${System.currentTimeMillis() % 10000}") // Generate temporary ID
+                        putString("email", email)
+                        apply()
+                    }
+
+                    Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show()
+
+                    // Go to main app
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }
+            }
+        }
+
+        // Sign in link - go to login page
+        txtSignIn.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+    }
+}

@@ -11,4 +11,8 @@
     <color name="input_bg_grey">#C4C8D0</color>
     <color name="text_grey_dark">#2E3A59</color>
     <color name="text_grey_light">#717E95</color>
+    <color name="header_grey">#9E9EB3</color>
+    <color name="category_blue">#4A4E74</color>
+    <color name="nav_dark">#343A50</color>
+    <color name="profile_pink">#FF80AB</color>
 </resources>

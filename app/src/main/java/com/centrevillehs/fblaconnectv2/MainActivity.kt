@@ -2,23 +2,27 @@ package com.centrevillehs.fblaconnectv2
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
+import android.view.View
 import android.widget.CalendarView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.centrevillehs.fblaconnectv2.ui.main.openUrl
-import com.centrevillehs.fblaconnectv2.ui.main.showEventsCalendar
-import com.centrevillehs.fblaconnectv2.ui.main.showNews
-import com.centrevillehs.fblaconnectv2.ui.main.showProfile
-import com.centrevillehs.fblaconnectv2.ui.main.showResources
+import com.centrevillehs.fblaconnectv2.ui.main.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     var firstName = ""
     var lastName = ""
     var memberID = ""
+
+    private lateinit var dashboardView: ScrollView
+    private lateinit var calendarContainer: LinearLayout
+    private lateinit var contentArea: ScrollView
+    private lateinit var contentText: TextView
+    private lateinit var socialMediaButtons: LinearLayout
+    private lateinit var calendarView: CalendarView
+    private lateinit var eventDetailsText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,49 +41,87 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        val contentText = findViewById<TextView>(R.id.contentText)
+        // Initialize Views
+        dashboardView = findViewById(R.id.dashboardView)
+        calendarContainer = findViewById(R.id.calendarContainer)
+        contentArea = findViewById(R.id.contentArea)
+        contentText = findViewById(R.id.contentText)
+        socialMediaButtons = findViewById(R.id.socialMediaButtons)
+        calendarView = findViewById(R.id.calendarView)
+        eventDetailsText = findViewById(R.id.eventDetailsText)
+
+        // Setup Header
+        val txtUserName = findViewById<TextView>(R.id.txtUserName)
+        txtUserName.text = "$firstName $lastName"
+
+        // Setup Category Click Listeners
+        findViewById<LinearLayout>(R.id.categoryRegistration).setOnClickListener {
+            showProfileView()
+        }
+        findViewById<LinearLayout>(R.id.categoryCompetition).setOnClickListener {
+            openUrl("https://www.fbla.org/competitions/")
+        }
+        findViewById<LinearLayout>(R.id.categoryEvents).setOnClickListener {
+            showEventsView()
+        }
+        findViewById<LinearLayout>(R.id.categoryNews).setOnClickListener {
+            showNewsView()
+        }
+        findViewById<LinearLayout>(R.id.categoryResources).setOnClickListener {
+            showResourcesView()
+        }
+        findViewById<LinearLayout>(R.id.categorySocial).setOnClickListener {
+            openUrl("https://www.fbla.org/social-media/")
+        }
+
+        // Setup Bottom Navigation
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        val socialMediaButtons = findViewById<LinearLayout>(R.id.socialMediaButtons)
-
-        // Calendar views
-        val calendarContainer = findViewById<LinearLayout>(R.id.calendarContainer)
-        val calendarView = findViewById<CalendarView>(R.id.calendarView)
-        val eventDetailsText = findViewById<TextView>(R.id.eventDetailsText)
-        val contentArea = findViewById<ScrollView>(R.id.contentArea)
-
-        val btnInstagram = findViewById<Button>(R.id.btnInstagram)
-        val btnTwitter = findViewById<Button>(R.id.btnTwitter)
-        val btnFacebook = findViewById<Button>(R.id.btnFacebook)
-
-        // Social media button clicks
-        btnInstagram.setOnClickListener {
-            openUrl("https://www.instagram.com/fbla_national/")
-        }
-        btnTwitter.setOnClickListener {
-            openUrl("https://x.com/FBLA_National")
-        }
-        btnFacebook.setOnClickListener {
-            openUrl("https://www.facebook.com/FutureBusinessLeaders/")
-        }
-
-        // Create menu items
-        bottomNav.menu.add(0, 1, 0, "Profile").setIcon(android.R.drawable.ic_menu_myplaces)
-        bottomNav.menu.add(0, 2, 1, "Events").setIcon(android.R.drawable.ic_menu_today)
-        bottomNav.menu.add(0, 3, 2, "Resources").setIcon(android.R.drawable.ic_menu_info_details)
-        bottomNav.menu.add(0, 4, 3, "News").setIcon(android.R.drawable.ic_menu_report_image)
-
-        // Show Profile by default
-        showProfile(contentText, socialMediaButtons, contentArea, calendarContainer)
-
-        // Handle bottom nav clicks
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                1 -> showProfile(contentText, socialMediaButtons, contentArea, calendarContainer)
-                2 -> showEventsCalendar(calendarView, eventDetailsText, contentArea, calendarContainer)
-                3 -> showResources(contentText, socialMediaButtons, contentArea, calendarContainer)
-                4 -> showNews(contentText, socialMediaButtons, contentArea, calendarContainer)
+                R.id.nav_home -> showDashboardView()
+                R.id.nav_calendar -> showEventsView()
+                R.id.nav_profile -> showProfileView()
             }
             true
         }
+
+        // Social media buttons in contentArea
+        findViewById<View>(R.id.btnInstagram).setOnClickListener { openUrl("https://www.instagram.com/fbla_national/") }
+        findViewById<View>(R.id.btnTwitter).setOnClickListener { openUrl("https://x.com/FBLA_National") }
+        findViewById<View>(R.id.btnFacebook).setOnClickListener { openUrl("https://www.facebook.com/FutureBusinessLeaders/") }
+
+        // Start with Dashboard
+        showDashboardView()
+    }
+
+    private fun hideAll() {
+        dashboardView.visibility = View.GONE
+        calendarContainer.visibility = View.GONE
+        contentArea.visibility = View.GONE
+    }
+
+    private fun showDashboardView() {
+        hideAll()
+        dashboardView.visibility = View.VISIBLE
+    }
+
+    private fun showProfileView() {
+        hideAll()
+        showProfile(contentText, socialMediaButtons, contentArea, calendarContainer)
+    }
+
+    private fun showEventsView() {
+        hideAll()
+        showEventsCalendar(calendarView, eventDetailsText, contentArea, calendarContainer)
+    }
+
+    private fun showNewsView() {
+        hideAll()
+        showNews(contentText, socialMediaButtons, contentArea, calendarContainer)
+    }
+
+    private fun showResourcesView() {
+        hideAll()
+        showResources(contentText, socialMediaButtons, contentArea, calendarContainer)
     }
 }

@@ -18,7 +18,8 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        val editUsername = findViewById<EditText>(R.id.editUsername)
+        val editFirstName = findViewById<EditText>(R.id.editFirstName)
+        val editLastName = findViewById<EditText>(R.id.editLastName)
         val editEmail = findViewById<EditText>(R.id.editRegisterEmail)
         val editPassword = findViewById<EditText>(R.id.editRegisterPassword)
         val editConfirmPassword = findViewById<EditText>(R.id.editConfirmPassword)
@@ -51,15 +52,19 @@ class RegisterActivity : AppCompatActivity() {
 
         // Register button
         btnRegister.setOnClickListener {
-            val username = editUsername.text.toString().trim()
+            val firstName = editFirstName.text.toString().trim()
+            val lastName = editLastName.text.toString().trim()
             val email = editEmail.text.toString().trim()
             val password = editPassword.text.toString()
             val confirmPassword = editConfirmPassword.text.toString()
 
             // Validation
             when {
-                username.isEmpty() -> {
-                    Toast.makeText(this, "Please enter a username", Toast.LENGTH_SHORT).show()
+                firstName.isEmpty() -> {
+                    Toast.makeText(this, "Please enter your first name", Toast.LENGTH_SHORT).show()
+                }
+                lastName.isEmpty() -> {
+                    Toast.makeText(this, "Please enter your last name", Toast.LENGTH_SHORT).show()
                 }
                 email.isEmpty() -> {
                     Toast.makeText(this, "Please enter an email", Toast.LENGTH_SHORT).show()
@@ -83,9 +88,9 @@ class RegisterActivity : AppCompatActivity() {
                     // Registration successful - save to SharedPreferences
                     val prefs = getSharedPreferences("FBLAPrefs", MODE_PRIVATE)
                     prefs.edit().apply {
-                        putString("firstName", username) // Using username as firstName for now
-                        putString("lastName", "")
-                        putString("memberID", "NEW${System.currentTimeMillis() % 10000}") // Generate temporary ID
+                        putString("firstName", firstName)
+                        putString("lastName", lastName)
+                        putString("memberID", "NEW${System.currentTimeMillis() % 10000}")
                         putString("email", email)
                         apply()
                     }

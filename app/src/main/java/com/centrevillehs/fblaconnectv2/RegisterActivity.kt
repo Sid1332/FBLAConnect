@@ -9,6 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.firestore.FieldValue
+
 
 class RegisterActivity : AppCompatActivity() {
     private var passwordVisible = false
@@ -85,6 +87,8 @@ class RegisterActivity : AppCompatActivity() {
                     Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
+
+
                     // Registration successful - save to SharedPreferences
                     val prefs = getSharedPreferences("FBLAPrefs", MODE_PRIVATE)
                     prefs.edit().apply {

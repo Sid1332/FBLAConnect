@@ -3,6 +3,7 @@ package com.centrevillehs.fblaconnectv2
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -10,11 +11,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FieldValue
-
+import at.favre.lib.crypto.bcrypt.BCrypt
+import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterActivity : AppCompatActivity() {
     private var passwordVisible = false
     private var confirmPasswordVisible = false
+
+    val db = FirebaseFirestore.getInstance()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,12 +94,31 @@ class RegisterActivity : AppCompatActivity() {
                 else -> {
 
 
+                    val docReference = db.collection("users").document()
+                    val userId = docReference.id
+                    val userData = mapOf(
+                        "UserId" to userId,
+                        "OrganizationId" to 0,
+                        "firstName" to firstName,
+                        "lastName" to lastName,
+                        "email" to email,
+                        "password" to BCrypt.withDefaults().hashToString(12, password.toCharArray()),
+                        "createdAt" to FieldValue.serverTimestamp(),
+                    )
+                        docReference
+                            .set(userData)
+                            .addOnSuccessListener {
+                            Log.d("USER_REG", "User created successfully")
+                        }
+                            .addOnFailureListener { e ->
+                            Log.e("USER_REG", "Failed to create user", e)
+                        }
                     // Registration successful - save to SharedPreferences
                     val prefs = getSharedPreferences("FBLAPrefs", MODE_PRIVATE)
                     prefs.edit().apply {
                         putString("firstName", firstName)
                         putString("lastName", lastName)
-                        putString("memberID", "NEW${System.currentTimeMillis() % 10000}")
+                        putString("memberID", userId)
                         putString("email", email)
                         apply()
                     }

@@ -1,216 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="#F0F0F0">
+    android:background="@color/welcome_bg">
 
-    <LinearLayout
+    <!-- World Map Watermark Background -->
+    <ImageView
+        android:id="@+id/imgWorldMapRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="32dp"
-        android:gravity="center_horizontal">
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="80dp"
+        android:alpha="1.0"
+        android:scaleType="fitCenter"
+        android:scaleX="2.5"
+        android:scaleY="2.5"
+        android:src="@drawable/world_map_bg" />
 
-        <!-- FBLA Logo Placeholder -->
-        <ImageView
-            android:id="@+id/imgLogo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="20dp"
-            android:src="@mipmap/ic_launcher"
-            android:contentDescription="FBLA Logo" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <!-- Create an Account! Title -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Create an"
-            android:textSize="28sp"
-            android:textColor="#6A6A6A"
-            android:fontFamily="sans-serif-light" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Account!"
-            android:textSize="28sp"
-            android:textColor="@color/fbla_blue"
-            android:textStyle="bold"
-            android:layout_marginBottom="40dp" />
-
-        <!-- Username Input -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/input_background"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="center_vertical">
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="32dp">
 
+            <!-- FBLA Logo -->
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/ic_menu_myplaces"
-                android:layout_marginEnd="12dp"
-                android:contentDescription="Username Icon" />
-
-            <EditText
-                android:id="@+id/editUsername"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:id="@+id/imgRegisterLogo"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:hint="Username"
-                android:inputType="text"
-                android:background="@android:color/transparent"
-                android:textSize="16sp" />
-        </LinearLayout>
+                android:layout_marginTop="40dp"
+                android:adjustViewBounds="true"
+                android:layout_gravity="start"
+                android:src="@drawable/fbla_logo" />
 
-        <!-- Email Address Input -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/input_background"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/ic_dialog_email"
-                android:layout_marginEnd="12dp"
-                android:contentDescription="Email Icon" />
-
-            <EditText
-                android:id="@+id/editRegisterEmail"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+            <!-- Create an Account! Text -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email Address"
-                android:inputType="textEmailAddress"
-                android:background="@android:color/transparent"
-                android:textSize="16sp" />
-        </LinearLayout>
+                android:layout_marginTop="24dp"
+                android:orientation="vertical">
 
-        <!-- Password Input -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/input_background"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/raleway"
+                    android:text="Create an"
+                    android:textColor="@color/text_grey_dark"
+                    android:textSize="48sp" />
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/ic_lock_lock"
-                android:layout_marginEnd="12dp"
-                android:contentDescription="Password Icon" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/raleway"
+                    android:text="Account!"
+                    android:textColor="@color/heading_text_grey"
+                    android:textSize="56sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="-10dp" />
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/editRegisterPassword"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:background="@android:color/transparent"
-                android:textSize="16sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
-            <ImageView
-                android:id="@+id/iconToggleRegisterPassword"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/ic_menu_view"
-                android:layout_marginStart="12dp"
-                android:contentDescription="Toggle Password Visibility" />
-        </LinearLayout>
+            <!-- Username Input -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:background="@drawable/login_input_background"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_marginBottom="20dp">
 
-        <!-- Confirm Password Input -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/input_background"
-            android:padding="16dp"
-            android:layout_marginBottom="30dp"
-            android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_menu_myplaces"
+                    android:alpha="0.5" />
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/ic_lock_lock"
-                android:layout_marginEnd="12dp"
-                android:contentDescription="Confirm Password Icon" />
+                <EditText
+                    android:id="@+id/editUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/raleway"
+                    android:hint="Username"
+                    android:inputType="text"
+                    android:textColor="@color/text_grey_dark"
+                    android:textColorHint="@color/text_grey_dark"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/editConfirmPassword"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:hint="Confirm Password"
-                android:inputType="textPassword"
-                android:background="@android:color/transparent"
-                android:textSize="16sp" />
+            <!-- Email Input -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:background="@drawable/login_input_background"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_marginBottom="20dp">
 
-            <ImageView
-                android:id="@+id/iconToggleConfirmPassword"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/ic_menu_view"
-                android:layout_marginStart="12dp"
-                android:contentDescription="Toggle Password Visibility" />
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_dialog_email"
+                    android:alpha="0.5" />
 
-        <!-- Register Button -->
-        <Button
-            android:id="@+id/btnRegister"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="Register"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:backgroundTint="#2C3E50"
-            android:layout_marginBottom="30dp" />
+                <EditText
+                    android:id="@+id/editRegisterEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/raleway"
+                    android:hint="Email Adress"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/text_grey_dark"
+                    android:textColorHint="@color/text_grey_dark"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
-        <!-- Spacer -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            <!-- Password Input -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:background="@drawable/login_input_background"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_marginBottom="20dp">
 
-        <!-- Sign In Link -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_lock_idle_lock"
+                    android:alpha="0.5" />
 
-            <TextView
+                <EditText
+                    android:id="@+id/editRegisterPassword"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/raleway"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:textColor="@color/text_grey_dark"
+                    android:textColorHint="@color/text_grey_dark"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/iconToggleRegisterPassword"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_menu_view"
+                    android:alpha="0.5"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+
+            <!-- Confirm Password Input -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:background="@drawable/login_input_background"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_marginBottom="32dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_lock_idle_lock"
+                    android:alpha="0.5" />
+
+                <EditText
+                    android:id="@+id/editConfirmPassword"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/raleway"
+                    android:hint="Confirm Password"
+                    android:inputType="textPassword"
+                    android:textColor="@color/text_grey_dark"
+                    android:textColorHint="@color/text_grey_dark"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/iconToggleConfirmPassword"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_menu_view"
+                    android:alpha="0.5"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+
+            <!-- Register Button -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:background="@drawable/login_button_background"
+                android:fontFamily="@font/raleway"
+                android:text="Register"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="24dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.5" />
+
+            <!-- Footer Sign in link -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Already have an account? "
-                android:textSize="14sp"
-                android:textColor="#6A6A6A" />
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
 
-            <TextView
-                android:id="@+id/txtSignIn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sign in"
-                android:textSize="14sp"
-                android:textColor="@color/fbla_blue"
-                android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/raleway"
+                    android:text="Already have an account? "
+                    android:textColor="@color/text_grey_dark"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtSignIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/raleway"
+                    android:text="Sign in"
+                    android:textColor="@color/text_grey_dark"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
         </LinearLayout>
-
-    </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+</RelativeLayout>

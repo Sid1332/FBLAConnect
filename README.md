@@ -1,4 +1,4 @@
-# FBLA Connect
+# FBLA Central
 **FBLA Mobile Application Development | 2025–2026**
 
 ## Overview
@@ -45,9 +45,9 @@ FBLA Connect brings everything together in one app:
 ---
 
 ## Creators
-- Siddhu
-- Ethan
-- Sahir
+- Sahir - Supreme Director, Supreme presenator, Supreme Leader
+- Siddhu - UI/UX designer
+- Ethan - Database manager, little bitch
 
 ---
 

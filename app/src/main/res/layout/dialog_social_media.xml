@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="32dp"
+    android:background="@color/white"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway"
+        android:text="Connect with FBLA"
+        android:textColor="@color/text_grey_dark"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDialogInstagram"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:text="📷 Instagram"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:background="@drawable/social_button_background"
+        android:fontFamily="@font/raleway"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDialogTwitter"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:text="🐦 Twitter (X)"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:background="@drawable/social_button_background"
+        android:fontFamily="@font/raleway"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDialogFacebook"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:text="👍 Facebook"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:background="@drawable/social_button_background"
+        android:fontFamily="@font/raleway"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+
+</LinearLayout>

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.centrevillehs.fblaconnectv2.ui.main.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -71,7 +72,7 @@ class MainActivity : AppCompatActivity() {
             showResourcesView()
         }
         findViewById<LinearLayout>(R.id.categorySocial).setOnClickListener {
-            openUrl("https://www.fbla.org/social-media/")
+            showSocialPopup()
         }
 
         // Admin Only Section
@@ -96,13 +97,30 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        // Social media buttons in contentArea
-        findViewById<View>(R.id.btnInstagram).setOnClickListener { openUrl("https://www.instagram.com/fbla_national/") }
-        findViewById<View>(R.id.btnTwitter).setOnClickListener { openUrl("https://x.com/FBLA_National") }
-        findViewById<View>(R.id.btnFacebook).setOnClickListener { openUrl("https://www.facebook.com/FutureBusinessLeaders/") }
-
         // Start with Dashboard
         showDashboardView()
+    }
+
+    private fun showSocialPopup() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_social_media, null)
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+
+        dialogView.findViewById<Button>(R.id.btnDialogInstagram).setOnClickListener {
+            openUrl("https://www.instagram.com/fbla_national/")
+            dialog.dismiss()
+        }
+        dialogView.findViewById<Button>(R.id.btnDialogTwitter).setOnClickListener {
+            openUrl("https://x.com/FBLA_National")
+            dialog.dismiss()
+        }
+        dialogView.findViewById<Button>(R.id.btnDialogFacebook).setOnClickListener {
+            openUrl("https://www.facebook.com/FutureBusinessLeaders/")
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     private fun hideAll() {

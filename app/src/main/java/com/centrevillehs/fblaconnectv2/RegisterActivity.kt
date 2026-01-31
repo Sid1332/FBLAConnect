@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.core.snap
 import com.google.firebase.firestore.FieldValue
 import at.favre.lib.crypto.bcrypt.BCrypt
 import com.google.firebase.firestore.FirebaseFirestore
@@ -92,42 +93,52 @@ class RegisterActivity : AppCompatActivity() {
                     Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
+                    db.collection("users")
+                        .whereEqualTo("email",email)
+                        .get() //Initiates the query with the options defined above( look for the email in side of the users collection )
+                        .addOnSuccessListener { snapshot ->
+                            if (snapshot.size() > 0){
+                                Toast.makeText(this, "Account already exists", Toast.LENGTH_SHORT).show()
+                            }
+                            else {
+                                val docReference = db.collection("users").document()
+                                val userId = docReference.id
+                                val userData = mapOf(
+                                    "UserId" to userId,
+                                    "OrganizationId" to 0,
+                                    "firstName" to firstName,
+                                    "lastName" to lastName,
+                                    "email" to email,
+                                    "password" to BCrypt.withDefaults().hashToString(12, password.toCharArray()),
+                                    "createdAt" to FieldValue.serverTimestamp(),
+                                )
+                                docReference
+                                    .set(userData)
+                                    .addOnSuccessListener {
+                                        Log.d("USER_REG", "User created successfully")
+                                    }
+                                    .addOnFailureListener { e ->
+                                        Log.e("USER_REG", "Failed to create user", e)
+                                    }
+                                // Registration successful - save to SharedPreferences
+                                val prefs = getSharedPreferences("FBLAPrefs", MODE_PRIVATE)
+                                prefs.edit().apply {
+                                    putString("firstName", firstName)
+                                    putString("lastName", lastName)
+                                    putString("memberID", userId)
+                                    putString("email", email)
+                                    apply()
+                                }
 
+                                Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show()
 
-                    val docReference = db.collection("users").document()
-                    val userId = docReference.id
-                    val userData = mapOf(
-                        "UserId" to userId,
-                        "OrganizationId" to 0,
-                        "firstName" to firstName,
-                        "lastName" to lastName,
-                        "email" to email,
-                        "password" to BCrypt.withDefaults().hashToString(12, password.toCharArray()),
-                        "createdAt" to FieldValue.serverTimestamp(),
-                    )
-                        docReference
-                            .set(userData)
-                            .addOnSuccessListener {
-                            Log.d("USER_REG", "User created successfully")
+                                // Go to main app
+                                startActivity(Intent(this, MainActivity::class.java))
+                                finish()
+                            }
                         }
-                            .addOnFailureListener { e ->
-                            Log.e("USER_REG", "Failed to create user", e)
-                        }
-                    // Registration successful - save to SharedPreferences
-                    val prefs = getSharedPreferences("FBLAPrefs", MODE_PRIVATE)
-                    prefs.edit().apply {
-                        putString("firstName", firstName)
-                        putString("lastName", lastName)
-                        putString("memberID", userId)
-                        putString("email", email)
-                        apply()
-                    }
 
-                    Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show()
 
-                    // Go to main app
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
                 }
             }
         }

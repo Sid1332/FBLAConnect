@@ -190,104 +190,13 @@
             </LinearLayout>
         </ScrollView>
 
-        <!-- Add Event Form Container -->
-        <ScrollView
-            android:id="@+id/addEventView"
+        <!-- Fragment Container for Add Event, etc. -->
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:visibility="gone">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/welcome_bg"
-                android:orientation="vertical"
-                android:padding="32dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/raleway"
-                    android:text="Add New Event"
-                    android:textColor="@color/text_grey_dark"
-                    android:textSize="32sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="32dp" />
-
-                <!-- Event Name -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:background="@drawable/login_input_background"
-                    android:gravity="center_vertical"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:layout_marginBottom="16dp">
-                    <EditText
-                        android:id="@+id/editEventName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="@font/raleway"
-                        android:hint="Event Name"
-                        android:inputType="text"
-                        android:textColor="@color/text_grey_dark"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <!-- Event Date -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:background="@drawable/login_input_background"
-                    android:gravity="center_vertical"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:layout_marginBottom="16dp">
-                    <EditText
-                        android:id="@+id/editEventDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="@font/raleway"
-                        android:hint="Date (e.g. MM/DD/YYYY)"
-                        android:inputType="date"
-                        android:textColor="@color/text_grey_dark"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <!-- Event Description -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:background="@drawable/login_input_background"
-                    android:padding="20dp"
-                    android:layout_marginBottom="32dp">
-                    <EditText
-                        android:id="@+id/editEventDescription"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="@font/raleway"
-                        android:hint="Short Description"
-                        android:gravity="top"
-                        android:inputType="textMultiLine"
-                        android:textColor="@color/text_grey_dark"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnSaveEvent"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:background="@drawable/login_button_background"
-                    android:fontFamily="@font/raleway"
-                    android:text="Save Event"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </ScrollView>
+            android:visibility="gone" />
 
         <!-- Old Calendar View Container -->
         <LinearLayout

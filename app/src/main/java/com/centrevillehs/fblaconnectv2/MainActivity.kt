@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var socialMediaButtons: LinearLayout
     private lateinit var calendarView: CalendarView
     private lateinit var eventDetailsText: TextView
-    private lateinit var addEventView: ScrollView
+    private lateinit var fragmentContainer: FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         socialMediaButtons = findViewById(R.id.socialMediaButtons)
         calendarView = findViewById(R.id.calendarView)
         eventDetailsText = findViewById(R.id.eventDetailsText)
-        addEventView = findViewById(R.id.addEventView)
+        fragmentContainer = findViewById(R.id.fragmentContainer)
 
         // Setup Header
         val txtUserName = findViewById<TextView>(R.id.txtUserName)
@@ -85,25 +85,6 @@ class MainActivity : AppCompatActivity() {
             categoryAddEvent.visibility = View.GONE
         }
 
-        // Add Event Form Logic
-        val editEventName = findViewById<EditText>(R.id.editEventName)
-        val editEventDate = findViewById<EditText>(R.id.editEventDate)
-        val editEventDescription = findViewById<EditText>(R.id.editEventDescription)
-        val btnSaveEvent = findViewById<Button>(R.id.btnSaveEvent)
-
-        btnSaveEvent.setOnClickListener {
-            val name = editEventName.text.toString().trim()
-            val date = editEventDate.text.toString().trim()
-            val description = editEventDescription.text.toString().trim()
-
-            if (name.isEmpty() || date.isEmpty() || description.isEmpty()) {
-                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Event '$name' saved!", Toast.LENGTH_SHORT).show()
-                showDashboardView()
-            }
-        }
-
         // Setup Bottom Navigation
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.setOnItemSelectedListener { item ->
@@ -128,36 +109,39 @@ class MainActivity : AppCompatActivity() {
         dashboardView.visibility = View.GONE
         calendarContainer.visibility = View.GONE
         contentArea.visibility = View.GONE
-        addEventView.visibility = View.GONE
+        fragmentContainer.visibility = View.GONE
     }
 
-    private fun showDashboardView() {
+    fun showDashboardView() {
         hideAll()
         dashboardView.visibility = View.VISIBLE
     }
 
-    private fun showProfileView() {
+    fun showProfileView() {
         hideAll()
         showProfile(contentText, socialMediaButtons, contentArea, calendarContainer)
     }
 
-    private fun showEventsView() {
+    fun showEventsView() {
         hideAll()
         showEventsCalendar(calendarView, eventDetailsText, contentArea, calendarContainer)
     }
 
-    private fun showNewsView() {
+    fun showNewsView() {
         hideAll()
         showNews(contentText, socialMediaButtons, contentArea, calendarContainer)
     }
 
-    private fun showResourcesView() {
+    fun showResourcesView() {
         hideAll()
         showResources(contentText, socialMediaButtons, contentArea, calendarContainer)
     }
 
-    private fun showAddEventView() {
+    fun showAddEventView() {
         hideAll()
-        addEventView.visibility = View.VISIBLE
+        fragmentContainer.visibility = View.VISIBLE
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, AddEventActivity())
+            .commit()
     }
 }

@@ -8,12 +8,17 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.centrevillehs.fblaconnectv2.ui.main.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
+
+
+
+
     var firstName = ""
     var lastName = ""
     var memberID = ""
-    var isAdmin = true // Temporary admin status
+    var isAdmin = true
 
     private lateinit var headerLayout: LinearLayout
     private lateinit var dashboardView: ScrollView
@@ -39,6 +44,9 @@ class MainActivity : AppCompatActivity() {
             finish()
             return
         }
+
+
+
 
         setContentView(R.layout.activity_main)
 

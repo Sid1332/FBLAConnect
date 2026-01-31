@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 // Extract first name from email (before @)
-                val firstName = email.substringBefore("@").capitalize()
+
                 db.collection("users")
                     .whereEqualTo("email",email)
                     .limit(1)
@@ -61,12 +61,16 @@ class LoginActivity : AppCompatActivity() {
                         val storedHash = userDocument.getString("password") //Get the hash of the password
                         val verified = BCrypt.verifyer().verify(password.toCharArray(), storedHash).verified //Basically compares passwords
                         if (verified){
+                            val firstName = userDocument.getString("firstName")
+                            val lastName = userDocument.getString("lastName")
+                            val userId = userDocument.getString("userId")
+
                             // Save to SharedPreferences
                             val prefs = getSharedPreferences("FBLAPrefs", MODE_PRIVATE)
                             prefs.edit().apply {
                                 putString("firstName", firstName)
-                                putString("lastName", "Member")
-                                putString("memberID", "12345")
+                                putString("lastName", lastName)
+                                putString("memberID", userId)
                                 putString("email", email)
                                 apply()
                             }

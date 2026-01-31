@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity() {
 
     fun showProfileView() {
         hideAll()
-        showProfile(contentText, socialMediaButtons, contentArea, calendarContainer)
+        showProfile(contentText, contentArea, calendarContainer)
     }
 
     fun showEventsView() {

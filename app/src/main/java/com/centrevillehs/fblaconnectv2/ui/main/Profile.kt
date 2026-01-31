@@ -8,14 +8,12 @@ import com.centrevillehs.fblaconnectv2.MainActivity
 
 fun MainActivity.showProfile(
     textView: TextView,
-    socialButtons: LinearLayout,
     contentArea: ScrollView,
     calendarContainer: LinearLayout
 ) {
     // Show text content, hide calendar
     contentArea.visibility = View.VISIBLE
     calendarContainer.visibility = View.GONE
-    socialButtons.visibility = View.VISIBLE
 
     textView.text = """
         📱 MEMBER PROFILE
@@ -31,7 +29,5 @@ fun MainActivity.showProfile(
         
         Member Since: 2024
         Events Attended: 5
-        
-        🔗 Connect with FBLA on social media:
     """.trimIndent()
 }

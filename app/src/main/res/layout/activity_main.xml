@@ -12,6 +12,7 @@
 
         <!-- Header -->
         <LinearLayout
+            android:id="@+id/headerLayout"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:background="@color/header_grey"
@@ -226,6 +227,14 @@
                     <Button android:id="@+id/btnTwitter" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="🐦 TW" android:layout_margin="5dp" android:backgroundTint="@color/fbla_blue" />
                     <Button android:id="@+id/btnFacebook" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="👍 FB" android:layout_margin="5dp" android:backgroundTint="@color/fbla_blue" />
                 </LinearLayout>
+                <Button
+                    android:id="@+id/btnLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:text="Logout"
+                    android:backgroundTint="@color/fbla_blue" />
             </LinearLayout>
         </ScrollView>
 

@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     var memberID = ""
     var isAdmin = true // Temporary admin status
 
+    private lateinit var headerLayout: LinearLayout
     private lateinit var dashboardView: ScrollView
     private lateinit var calendarContainer: LinearLayout
     private lateinit var contentArea: ScrollView
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Initialize Views
+        headerLayout = findViewById(R.id.headerLayout)
         dashboardView = findViewById(R.id.dashboardView)
         calendarContainer = findViewById(R.id.calendarContainer)
         contentArea = findViewById(R.id.contentArea)
@@ -86,6 +88,16 @@ class MainActivity : AppCompatActivity() {
             categoryAddEvent.visibility = View.GONE
         }
 
+        // Logout Button
+        val btnLogout = findViewById<Button>(R.id.btnLogout)
+        btnLogout.setOnClickListener {
+            val editor = getSharedPreferences("FBLAPrefs", MODE_PRIVATE).edit()
+            editor.clear()
+            editor.apply()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+
         // Setup Bottom Navigation
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.setOnItemSelectedListener { item ->
@@ -124,6 +136,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideAll() {
+        headerLayout.visibility = View.VISIBLE
         dashboardView.visibility = View.GONE
         calendarContainer.visibility = View.GONE
         contentArea.visibility = View.GONE
@@ -137,7 +150,11 @@ class MainActivity : AppCompatActivity() {
 
     fun showProfileView() {
         hideAll()
-        showProfile(contentText, contentArea, calendarContainer)
+        headerLayout.visibility = View.GONE
+        fragmentContainer.visibility = View.VISIBLE
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, ProfileFragment())
+            .commit()
     }
 
     fun showEventsView() {

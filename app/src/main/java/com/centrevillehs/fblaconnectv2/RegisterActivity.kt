@@ -105,7 +105,7 @@ class RegisterActivity : AppCompatActivity() {
                                 val userId = docReference.id
                                 val userData = mapOf(
                                     "UserId" to userId,
-                                    "OrganizationId" to 0,
+                                    "OrganizationId" to "6AzZYBOgkvqP3avwKtu2",
                                     "firstName" to firstName,
                                     "lastName" to lastName,
                                     "email" to email,
@@ -131,7 +131,6 @@ class RegisterActivity : AppCompatActivity() {
                                 }
 
                                 Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show()
-
                                 // Go to main app
                                 startActivity(Intent(this, MainActivity::class.java))
                                 finish()

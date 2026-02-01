@@ -3,6 +3,7 @@ package com.centrevillehs.fblaconnectv2
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -63,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
                         if (verified){
                             val firstName = userDocument.getString("firstName")
                             val lastName = userDocument.getString("lastName")
-                            val userId = userDocument.getString("userId")
+                            val userId = userDocument.getString("UserId")
 
                             // Save to SharedPreferences
                             val prefs = getSharedPreferences("FBLAPrefs", MODE_PRIVATE)
@@ -74,6 +75,7 @@ class LoginActivity : AppCompatActivity() {
                                 putString("email", email)
                                 apply()
                             }
+                            Log.d("PREFS", prefs.all.toString())
                             // Go to main app
                             startActivity(Intent(this, MainActivity::class.java))
                             finish()

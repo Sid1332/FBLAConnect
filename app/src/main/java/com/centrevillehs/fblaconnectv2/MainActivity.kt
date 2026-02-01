@@ -2,6 +2,7 @@ package com.centrevillehs.fblaconnectv2
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.centrevillehs.fblaconnectv2.ui.main.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlin.collections.emptyList
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     var firstName = ""
     var lastName = ""
     var memberID = ""
-    var isAdmin = true
+    var isAdmin = false
 
     private lateinit var headerLayout: LinearLayout
     private lateinit var dashboardView: ScrollView
@@ -34,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Check if logged in
+
         val prefs = getSharedPreferences("FBLAPrefs", MODE_PRIVATE)
         firstName = prefs.getString("firstName", "") ?: ""
         lastName = prefs.getString("lastName", "") ?: ""
@@ -87,14 +90,41 @@ class MainActivity : AppCompatActivity() {
 
         // Admin Only Section
         val categoryAddEvent = findViewById<LinearLayout>(R.id.categoryAddEvent)
-        if (isAdmin) {
-            categoryAddEvent.visibility = View.VISIBLE
-            categoryAddEvent.setOnClickListener {
-                showAddEventView()
+
+        val db = FirebaseFirestore.getInstance()
+        val userDocument = db.collection("users").document(memberID)
+
+        userDocument.get().addOnSuccessListener { doc ->
+            val organizationId = doc.getString("OrganizationId")?: return@addOnSuccessListener //Guarantees a string and stops android studio from yelling at me.
+
+
+            val organizationDocument = db.collection("Organizations").document(organizationId)
+            //Get the administrators and compare to the current user
+            organizationDocument.get().addOnSuccessListener { orgDoc ->
+                if (!orgDoc.exists()) return@addOnSuccessListener
+
+                val administrators = orgDoc.get("adminIds") as? List<String> ?: emptyList() // Get a string array, if not make an empty list (prevents errors)
+                Log.d(
+                    "debug",
+                    "equal=${administrators[0] == memberID}, " +
+                            "adminLen=${administrators[0].length}, memberLen=${memberID.length}"
+                )
+                if (memberID in administrators){
+                    isAdmin = true
+                }
+                if (isAdmin) {
+                    categoryAddEvent.visibility = View.VISIBLE
+                    categoryAddEvent.setOnClickListener {
+                        showAddEventView()
+                    }
+                } else {
+                    categoryAddEvent.visibility = View.GONE
+                }
             }
-        } else {
-            categoryAddEvent.visibility = View.GONE
+
+
         }
+
 
         // Logout Button
         val btnLogout = findViewById<Button>(R.id.btnLogout)

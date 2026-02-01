@@ -47,7 +47,7 @@ FBLA Connect brings everything together in one app:
 ## Creators
 - Sahir - Supreme Director, Supreme presenator, Supreme Leader
 - Siddhu - UI/UX designer
-- Ethan - Database manager, little bitch
+- Ethan - Database manager
 
 ---
 

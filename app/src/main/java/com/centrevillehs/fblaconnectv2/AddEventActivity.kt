@@ -52,8 +52,7 @@ class AddEventActivity : Fragment() {
             val description = editEventDescription.text.toString().trim()
 
             if (name.isNotEmpty() && date.isNotEmpty() && description.isNotEmpty()) {
-                var firstName = ""
-                var lastName = ""
+
                 var memberID = ""
                 val prefs = requireContext().getSharedPreferences("FBLAPrefs", MODE_PRIVATE)
                 memberID = prefs.getString("memberID", "") ?: ""

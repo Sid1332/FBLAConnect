@@ -11,11 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import java.util.*
 
-/**
- * Note: Despite the "Activity" name for consistency, this class is a Fragment
- * to allow it to be hosted inside MainActivity while keeping the top/bottom bars.
- */
-class AddEventActivity : Fragment() {
+class AddEventFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

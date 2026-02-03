@@ -10,12 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.centrevillehs.fblaconnectv2.ui.main.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlin.collections.emptyList
 
 class MainActivity : AppCompatActivity() {
-
-
-
 
     var firstName = ""
     var lastName = ""
@@ -36,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Check if logged in
-
         val prefs = getSharedPreferences("FBLAPrefs", MODE_PRIVATE)
         firstName = prefs.getString("firstName", "") ?: ""
         lastName = prefs.getString("lastName", "") ?: ""
@@ -47,9 +42,6 @@ class MainActivity : AppCompatActivity() {
             finish()
             return
         }
-
-
-
 
         setContentView(R.layout.activity_main)
 
@@ -79,7 +71,7 @@ class MainActivity : AppCompatActivity() {
             showEventsView()
         }
         findViewById<LinearLayout>(R.id.categoryNews).setOnClickListener {
-            showNewsView()
+            showNewsListView()
         }
         findViewById<LinearLayout>(R.id.categoryResources).setOnClickListener {
             showResourcesView()
@@ -88,43 +80,34 @@ class MainActivity : AppCompatActivity() {
             showSocialPopup()
         }
 
-        // Admin Only Section
+        // Admin Section
         val categoryAddEvent = findViewById<LinearLayout>(R.id.categoryAddEvent)
+        val categoryPostNews = findViewById<LinearLayout>(R.id.categoryPostNews)
 
         val db = FirebaseFirestore.getInstance()
         val userDocument = db.collection("users").document(memberID)
 
         userDocument.get().addOnSuccessListener { doc ->
-            val organizationId = doc.getString("OrganizationId")?: return@addOnSuccessListener //Guarantees a string and stops android studio from yelling at me.
-
-
+            val organizationId = doc.getString("OrganizationId") ?: return@addOnSuccessListener
             val organizationDocument = db.collection("Organizations").document(organizationId)
-            //Get the administrators and compare to the current user
+            
             organizationDocument.get().addOnSuccessListener { orgDoc ->
                 if (!orgDoc.exists()) return@addOnSuccessListener
-
-                val administrators = orgDoc.get("adminIds") as? List<String> ?: emptyList() // Get a string array, if not make an empty list (prevents errors)
-                Log.d(
-                    "debug",
-                    "equal=${administrators[0] == memberID}, " +
-                            "adminLen=${administrators[0].length}, memberLen=${memberID.length}"
-                )
-                if (memberID in administrators){
+                val administrators = orgDoc.get("adminIds") as? List<String> ?: emptyList()
+                
+                if (memberID in administrators) {
                     isAdmin = true
-                }
-                if (isAdmin) {
                     categoryAddEvent.visibility = View.VISIBLE
-                    categoryAddEvent.setOnClickListener {
-                        showAddEventView()
-                    }
+                    categoryPostNews.visibility = View.VISIBLE
+                    
+                    categoryAddEvent.setOnClickListener { showAddEventView() }
+                    categoryPostNews.setOnClickListener { showPostNewsView() }
                 } else {
                     categoryAddEvent.visibility = View.GONE
+                    categoryPostNews.visibility = View.GONE
                 }
             }
-
-
         }
-
 
         // Logout Button
         val btnLogout = findViewById<Button>(R.id.btnLogout)
@@ -169,7 +152,6 @@ class MainActivity : AppCompatActivity() {
             openUrl("https://www.facebook.com/FutureBusinessLeaders/")
             dialog.dismiss()
         }
-
         dialog.show()
     }
 
@@ -200,9 +182,12 @@ class MainActivity : AppCompatActivity() {
         showEventsCalendar(calendarView, eventDetailsText, contentArea, calendarContainer)
     }
 
-    fun showNewsView() {
+    fun showNewsListView() {
         hideAll()
-        showNews(contentText, socialMediaButtons, contentArea, calendarContainer)
+        fragmentContainer.visibility = View.VISIBLE
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, NewsListFragment())
+            .commit()
     }
 
     fun showResourcesView() {
@@ -214,7 +199,15 @@ class MainActivity : AppCompatActivity() {
         hideAll()
         fragmentContainer.visibility = View.VISIBLE
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, AddEventActivity())
+            .replace(R.id.fragmentContainer, AddEventFragment())
+            .commit()
+    }
+
+    fun showPostNewsView() {
+        hideAll()
+        fragmentContainer.visibility = View.VISIBLE
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, PostNewsFragment())
             .commit()
     }
 }

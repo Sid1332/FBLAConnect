@@ -21,6 +21,7 @@ class VerificationActivity : AppCompatActivity() {
     private lateinit var lastName: String
     private lateinit var email: String
     private lateinit var password: String
+    private lateinit var organizationId: String
     private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +34,7 @@ class VerificationActivity : AppCompatActivity() {
         email = intent.getStringExtra("email") ?: ""
         password = intent.getStringExtra("password") ?: ""
         generatedCode = intent.getStringExtra("verificationCode") ?: ""
+        organizationId = intent.getStringExtra("organizationId") ?: "6AzZYBOgkvqP3avwKtu2"
 
         val txtMessage = findViewById<TextView>(R.id.txtVerificationMessage)
         val editCode = findViewById<EditText>(R.id.editVerificationCode)
@@ -66,7 +68,7 @@ class VerificationActivity : AppCompatActivity() {
         val userId = docReference.id
         val userData = mapOf(
             "UserId" to userId,
-            "OrganizationId" to "6AzZYBOgkvqP3avwKtu2",
+            "OrganizationId" to organizationId,
             "firstName" to firstName,
             "lastName" to lastName,
             "email" to email,

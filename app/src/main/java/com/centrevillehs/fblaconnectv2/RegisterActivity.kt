@@ -4,11 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.firestore.FirebaseFirestore
@@ -19,6 +15,8 @@ class RegisterActivity : AppCompatActivity() {
     private var confirmPasswordVisible = false
 
     val db = FirebaseFirestore.getInstance()
+    private val organizationsList = mutableListOf<Pair<String, String>>() // Name to ID
+    private var selectedOrganizationId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,12 +25,15 @@ class RegisterActivity : AppCompatActivity() {
         val editFirstName = findViewById<EditText>(R.id.editFirstName)
         val editLastName = findViewById<EditText>(R.id.editLastName)
         val editEmail = findViewById<EditText>(R.id.editRegisterEmail)
+        val autoCompleteOrganization = findViewById<AutoCompleteTextView>(R.id.autoCompleteOrganization)
         val editPassword = findViewById<EditText>(R.id.editRegisterPassword)
         val editConfirmPassword = findViewById<EditText>(R.id.editConfirmPassword)
         val btnRegister = findViewById<Button>(R.id.btnRegister)
         val txtSignIn = findViewById<TextView>(R.id.txtSignIn)
         val iconTogglePassword = findViewById<ImageView>(R.id.iconToggleRegisterPassword)
         val iconToggleConfirm = findViewById<ImageView>(R.id.iconToggleConfirmPassword)
+
+        setupOrganizationAutoComplete(autoCompleteOrganization)
 
         // Toggle password visibility
         iconTogglePassword.setOnClickListener {
@@ -63,6 +64,11 @@ class RegisterActivity : AppCompatActivity() {
             val email = editEmail.text.toString().trim()
             val password = editPassword.text.toString()
             val confirmPassword = editConfirmPassword.text.toString()
+            val typedOrgName = autoCompleteOrganization.text.toString().trim()
+
+            // Verify if the typed organization name matches a known one
+            val matchingOrg = organizationsList.find { it.first.equals(typedOrgName, ignoreCase = true) }
+            selectedOrganizationId = matchingOrg?.second ?: ""
 
             // Validation
             when {
@@ -77,6 +83,9 @@ class RegisterActivity : AppCompatActivity() {
                 }
                 !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
                     Toast.makeText(this, "Please enter a valid email", Toast.LENGTH_SHORT).show()
+                }
+                selectedOrganizationId.isEmpty() -> {
+                    Toast.makeText(this, "Please select a valid organization from the list", Toast.LENGTH_SHORT).show()
                 }
                 password.isEmpty() -> {
                     Toast.makeText(this, "Please enter a password", Toast.LENGTH_SHORT).show()
@@ -122,6 +131,7 @@ class RegisterActivity : AppCompatActivity() {
                                             putExtra("lastName", lastName)
                                             putExtra("email", email)
                                             putExtra("password", password)
+                                            putExtra("organizationId", selectedOrganizationId)
                                             putExtra("verificationCode", verificationCode)
                                         }
                                         startActivity(intent)
@@ -149,5 +159,35 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
+    }
+
+    private fun setupOrganizationAutoComplete(autoComplete: AutoCompleteTextView) {
+        db.collection("Organizations")
+            .whereEqualTo("level", 4)
+            .get()
+            .addOnSuccessListener { documents ->
+                organizationsList.clear()
+                val names = mutableListOf<String>()
+                
+                for (document in documents) {
+                    val name = document.getString("name") ?: "Unknown"
+                    organizationsList.add(name to document.id)
+                    names.add(name)
+                }
+
+                val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, names)
+                autoComplete.setAdapter(adapter)
+                
+                // Set click listener to capture ID when selected from dropdown
+                autoComplete.setOnItemClickListener { parent, _, position, _ ->
+                    val selectedName = parent.getItemAtPosition(position) as String
+                    val matchingOrg = organizationsList.find { it.first == selectedName }
+                    selectedOrganizationId = matchingOrg?.second ?: ""
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("ORG_FETCH", "Failed to fetch organizations", e)
+                Toast.makeText(this, "Failed to load organizations", Toast.LENGTH_SHORT).show()
+            }
     }
 }

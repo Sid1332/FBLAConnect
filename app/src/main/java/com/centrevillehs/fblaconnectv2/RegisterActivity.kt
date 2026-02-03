@@ -10,17 +10,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.core.snap
-import com.google.firebase.firestore.FieldValue
-import at.favre.lib.crypto.bcrypt.BCrypt
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.launch
 
 class RegisterActivity : AppCompatActivity() {
     private var passwordVisible = false
     private var confirmPasswordVisible = false
 
     val db = FirebaseFirestore.getInstance()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,51 +91,55 @@ class RegisterActivity : AppCompatActivity() {
                     Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
+                    // Check if email already exists
                     db.collection("users")
-                        .whereEqualTo("email",email)
-                        .get() //Initiates the query with the options defined above( look for the email in side of the users collection )
+                        .whereEqualTo("email", email)
+                        .get()
                         .addOnSuccessListener { snapshot ->
-                            if (snapshot.size() > 0){
+                            if (snapshot.size() > 0) {
                                 Toast.makeText(this, "Account already exists", Toast.LENGTH_SHORT).show()
-                            }
-                            else {
-                                val docReference = db.collection("users").document()
-                                val userId = docReference.id
-                                val userData = mapOf(
-                                    "UserId" to userId,
-                                    "OrganizationId" to "6AzZYBOgkvqP3avwKtu2",
-                                    "firstName" to firstName,
-                                    "lastName" to lastName,
-                                    "email" to email,
-                                    "password" to BCrypt.withDefaults().hashToString(12, password.toCharArray()),
-                                    "createdAt" to FieldValue.serverTimestamp(),
-                                )
-                                docReference
-                                    .set(userData)
-                                    .addOnSuccessListener {
-                                        Log.d("USER_REG", "User created successfully")
-                                    }
-                                    .addOnFailureListener { e ->
-                                        Log.e("USER_REG", "Failed to create user", e)
-                                    }
-                                // Registration successful - save to SharedPreferences
-                                val prefs = getSharedPreferences("FBLAPrefs", MODE_PRIVATE)
-                                prefs.edit().apply {
-                                    putString("firstName", firstName)
-                                    putString("lastName", lastName)
-                                    putString("memberID", userId)
-                                    putString("email", email)
-                                    apply()
-                                }
+                            } else {
+                                // Generate and send verification code
+                                val verificationCode = EmailService.generateVerificationCode()
 
-                                Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show()
-                                // Go to main app
-                                startActivity(Intent(this, MainActivity::class.java))
-                                finish()
+                                // Disable button to prevent double-clicks
+                                btnRegister.isEnabled = false
+
+                                lifecycleScope.launch {
+                                    Toast.makeText(this@RegisterActivity, "Sending verification code...", Toast.LENGTH_SHORT).show()
+
+                                    val success = EmailService.sendVerificationEmail(email, verificationCode)
+
+                                    // Re-enable button
+                                    btnRegister.isEnabled = true
+
+                                    if (success) {
+                                        Toast.makeText(this@RegisterActivity, "Verification code sent to $email", Toast.LENGTH_LONG).show()
+
+                                        // Go to verification screen
+                                        val intent = Intent(this@RegisterActivity, VerificationActivity::class.java).apply {
+                                            putExtra("firstName", firstName)
+                                            putExtra("lastName", lastName)
+                                            putExtra("email", email)
+                                            putExtra("password", password)
+                                            putExtra("verificationCode", verificationCode)
+                                        }
+                                        startActivity(intent)
+                                        finish()
+                                    } else {
+                                        Toast.makeText(
+                                            this@RegisterActivity,
+                                            "Failed to send email. Please check your internet connection and try again.",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                }
                             }
                         }
-
-
+                        .addOnFailureListener { e ->
+                            Log.e("USER_REG", "Failed to check email", e)
+                            Toast.makeText(this, "Error checking email. Please try again.", Toast.LENGTH_SHORT).show()
+                        }
                 }
             }
         }

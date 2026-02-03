@@ -1,6 +1,7 @@
 package com.centrevillehs.fblaconnectv2
 
 import android.app.DatePickerDialog
+import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
 class AddEventFragment : Fragment() {
@@ -17,6 +20,7 @@ class AddEventFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val db = FirebaseFirestore.getInstance()
         val view = inflater.inflate(R.layout.activity_add_event, container, false)
 
         val editEventName = view.findViewById<EditText>(R.id.editEventName)
@@ -44,10 +48,40 @@ class AddEventFragment : Fragment() {
             val description = editEventDescription.text.toString().trim()
 
             if (name.isNotEmpty() && date.isNotEmpty() && description.isNotEmpty()) {
+
+                var memberID = ""
+                val prefs = requireContext().getSharedPreferences("FBLAPrefs", MODE_PRIVATE)
+                memberID = prefs.getString("memberID", "") ?: ""
                 // This is where you should upload the data to the database.
-                Toast.makeText(requireContext(), "Successfully added event: $name, date: $date", Toast.LENGTH_LONG).show()
-                // Return to Dashboard
+                db.collection("users").document(memberID).get().addOnSuccessListener { //Gets the user organization Id
+                    doc ->
+                    val organizationId = doc.getString("OrganizationId")
+
+
+                    val userData = mapOf(
+                        "name" to name,
+                        "date" to date,
+                        "description" to description,
+                        "organizationId" to organizationId,
+                        "userId" to memberID,
+                        "createdAt" to FieldValue.serverTimestamp()
+                    )
+                    db.collection("events").add(userData)
+                        .addOnSuccessListener {
+                            Toast.makeText(requireContext(), "Successfully added event: $name, date: $date", Toast.LENGTH_LONG).show()
+                            // Return to Dashboard
+
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(requireContext(), "Failed to add event", Toast.LENGTH_SHORT).show()
+                        }
+
+                }
                 (activity as? MainActivity)?.showDashboardView()
+
+
+
+
             } else {
                 Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }

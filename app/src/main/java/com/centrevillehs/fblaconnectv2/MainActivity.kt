@@ -109,16 +109,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Logout Button
-        val btnLogout = findViewById<Button>(R.id.btnLogout)
-        btnLogout.setOnClickListener {
-            val editor = getSharedPreferences("FBLAPrefs", MODE_PRIVATE).edit()
-            editor.clear()
-            editor.apply()
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-        }
-
         // Setup Bottom Navigation
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.setOnItemSelectedListener { item ->

@@ -17,8 +17,8 @@ class EmailService {
     companion object {
         private const val SMTP_HOST = "smtp.gmail.com"
         private const val SMTP_PORT = "587"
-        private const val EMAIL = "abrarsahir26@gmail.com"
-        private const val PASSWORD = "kqom etsv octg mgba"
+        private const val EMAIL = "fblacentralverify@gmail.com"
+        private const val PASSWORD = "vuik iovc yfwx cson"
 
         fun generateVerificationCode(): String {
             return Random.nextInt(100000, 999999).toString()
@@ -50,7 +50,7 @@ class EmailService {
                         setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail))
                         subject = "FBLA Connect - Email Verification"
                         setText("""
-                            Welcome to FBLA Connect!
+                            Welcome to FBLA Central!
                             
                             Your verification code is: $code
                             
@@ -58,7 +58,7 @@ class EmailService {
                             
                             If you didn't request this code, please ignore this email.
                             
-                            - FBLA Connect Team
+                            - FBLA Central Team
                         """.trimIndent())
                     }
 

@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 
 class ProfileFragment : Fragment() {
@@ -21,6 +21,7 @@ class ProfileFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
+        val profileImageLetter = view.findViewById<TextView>(R.id.profileImageLetter)
         val profileName = view.findViewById<TextView>(R.id.profileName)
         val profileEmail = view.findViewById<TextView>(R.id.profileEmail)
         val editProfileButton = view.findViewById<RelativeLayout>(R.id.editProfileButton)
@@ -36,10 +37,14 @@ class ProfileFragment : Fragment() {
         val lastName = prefs.getString("lastName", "")
         val email = prefs.getString("email", "")
 
+        if (!firstName.isNullOrEmpty()) {
+            profileImageLetter.text = firstName.take(1).uppercase()
+        }
+
         if (!firstName.isNullOrEmpty() && !lastName.isNullOrEmpty()) {
-            profileName.text = "$firstName $lastName"
+            profileName.text = getString(R.string.user_full_name, firstName, lastName)
         } else {
-            profileName.text = "John Pork"
+            profileName.text = getString(R.string.profile_name_placeholder)
         }
 
         if (!email.isNullOrEmpty()) {
@@ -47,20 +52,20 @@ class ProfileFragment : Fragment() {
         }
 
         editProfileButton.setOnClickListener {
-            Toast.makeText(context, "Edit Profile Clicked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, R.string.edit_profile_clicked, Toast.LENGTH_SHORT).show()
         }
 
         signOutButton.setOnClickListener {
-            val editor = prefs.edit()
-            editor.clear()
-            editor.apply()
+            prefs.edit {
+                clear()
+            }
             val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
             activity?.finish()
         }
 
         languageButton.setOnClickListener {
-            Toast.makeText(context, "Language Clicked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, R.string.language_clicked, Toast.LENGTH_SHORT).show()
         }
 
         aboutButton.setOnClickListener {
@@ -72,11 +77,11 @@ class ProfileFragment : Fragment() {
         }
 
         rateButton.setOnClickListener {
-            Toast.makeText(context, "Rate this App Clicked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, R.string.rate_app_clicked, Toast.LENGTH_SHORT).show()
         }
 
         shareButton.setOnClickListener {
-            Toast.makeText(context, "Share this App Clicked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, R.string.share_app_clicked, Toast.LENGTH_SHORT).show()
         }
 
         return view
@@ -84,17 +89,17 @@ class ProfileFragment : Fragment() {
 
     private fun showAboutDialog() {
         AlertDialog.Builder(requireContext())
-            .setTitle("About")
-            .setMessage("This is a an app for FBLA.")
-            .setPositiveButton("OK", null)
+            .setTitle(R.string.about_title)
+            .setMessage(R.string.about_message)
+            .setPositiveButton(R.string.ok, null)
             .show()
     }
 
     private fun showTermsDialog() {
         AlertDialog.Builder(requireContext())
-            .setTitle("Terms & Conditions")
-            .setMessage("These are the terms and conditions for using this app. By using this app, you agree to these terms.")
-            .setPositiveButton("OK", null)
+            .setTitle(R.string.terms_title)
+            .setMessage(R.string.terms_message)
+            .setPositiveButton(R.string.ok, null)
             .show()
     }
 }

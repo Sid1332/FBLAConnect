@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Fbla Connect v2</string>
+    <string name="profile_name_placeholder">John Pork</string>
+    <string name="user_full_name">%1$s %2$s</string>
+    <string name="edit_profile_clicked">Edit Profile Clicked</string>
+    <string name="language_clicked">Language Clicked</string>
+    <string name="rate_app_clicked">Rate this App Clicked</string>
+    <string name="share_app_clicked">Share this App Clicked</string>
+    <string name="about_title">About</string>
+    <string name="about_message">This is a an app for FBLA.</string>
+    <string name="terms_title">Terms &amp; Conditions</string>
+    <string name="terms_message">These are the terms and conditions for using this app. By using this app, you agree to these terms.</string>
+    <string name="ok">OK</string>
 </resources>

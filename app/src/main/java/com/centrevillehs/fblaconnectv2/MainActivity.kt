@@ -21,8 +21,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var headerLayout: LinearLayout
     private lateinit var dashboardView: ScrollView
     private lateinit var calendarContainer: LinearLayout
-    private lateinit var contentArea: ScrollView
-    private lateinit var contentText: TextView
     private lateinit var socialMediaButtons: LinearLayout
     private lateinit var calendarView: CalendarView
     private lateinit var eventDetailsText: TextView
@@ -49,8 +47,6 @@ class MainActivity : AppCompatActivity() {
         headerLayout = findViewById(R.id.headerLayout)
         dashboardView = findViewById(R.id.dashboardView)
         calendarContainer = findViewById(R.id.calendarContainer)
-        contentArea = findViewById(R.id.contentArea)
-        contentText = findViewById(R.id.contentText)
         socialMediaButtons = findViewById(R.id.socialMediaButtons)
         calendarView = findViewById(R.id.calendarView)
         eventDetailsText = findViewById(R.id.eventDetailsText)
@@ -59,6 +55,10 @@ class MainActivity : AppCompatActivity() {
         // Setup Header
         val txtUserName = findViewById<TextView>(R.id.txtUserName)
         txtUserName.text = "$firstName $lastName"
+        val profileImageLetter = findViewById<TextView>(R.id.profileImageLetter)
+        if (firstName.isNotEmpty()) {
+            profileImageLetter.text = firstName.substring(0, 1).uppercase()
+        }
 
         // Setup Category Click Listeners
         findViewById<LinearLayout>(R.id.categoryRegistration).setOnClickListener {
@@ -93,7 +93,12 @@ class MainActivity : AppCompatActivity() {
             
             organizationDocument.get().addOnSuccessListener { orgDoc ->
                 if (!orgDoc.exists()) return@addOnSuccessListener
-                val administrators = orgDoc.get("adminIds") as? List<String> ?: emptyList()
+                val administratorsRaw = orgDoc.get("adminIds")
+                val administrators = if (administratorsRaw is List<*>) {
+                    administratorsRaw.filterIsInstance<String>()
+                } else {
+                    emptyList()
+                }
                 
                 if (memberID in administrators) {
                     isAdmin = true
@@ -152,8 +157,8 @@ class MainActivity : AppCompatActivity() {
         headerLayout.visibility = View.VISIBLE
         dashboardView.visibility = View.GONE
         calendarContainer.visibility = View.GONE
-        contentArea.visibility = View.GONE
         fragmentContainer.visibility = View.GONE
+        socialMediaButtons.visibility = View.GONE
     }
 
     fun showDashboardView() {
@@ -172,7 +177,7 @@ class MainActivity : AppCompatActivity() {
 
     fun showEventsView() {
         hideAll()
-        showEventsCalendar(calendarView, eventDetailsText, contentArea, calendarContainer)
+        calendarContainer.visibility = View.VISIBLE
     }
 
     fun showNewsListView() {

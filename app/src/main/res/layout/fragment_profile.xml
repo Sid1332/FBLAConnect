@@ -23,11 +23,15 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/profileImage"
+        <TextView
+            android:id="@+id/profileImageLetter"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/circle_pink" /> <!-- Placeholder -->
+            android:background="@drawable/circle_yellow"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="48sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/profileName"

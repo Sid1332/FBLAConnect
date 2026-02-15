@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/competitionName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Broadcast Journalism"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/competitionType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Presentation Events (Individual or Team)" />
+
+    <TextView
+        android:id="@+id/competitionLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="High School" />
+
+    <TextView
+        android:id="@+id/competitionDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Broadcast Journalism challenges members to showcase their communication, storytelling, and production skills by creating and delivering a professional news broadcast. Competitors will research, script, and produce a cohesive news segment, culminating in a live presentation evaluated by a panel of judges." />
+
+    <Button
+        android:id="@+id/detailsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Event Details &amp; Guidelines" />
+
+</LinearLayout>

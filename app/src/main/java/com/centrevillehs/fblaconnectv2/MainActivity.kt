@@ -65,8 +65,7 @@ class MainActivity : AppCompatActivity() {
             showProfileView()
         }
         findViewById<LinearLayout>(R.id.categoryCompetition).setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse("https://www.fbla.org/competitions/"))
-            startActivity(intent)
+            showCompetitionsView()
         }
         findViewById<LinearLayout>(R.id.categoryEvents).setOnClickListener {
             showEventsView()
@@ -205,6 +204,15 @@ class MainActivity : AppCompatActivity() {
         fragmentContainer.visibility = View.VISIBLE
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, PostNewsFragment())
+            .commit()
+    }
+
+    fun showCompetitionsView() {
+        hideAll()
+        headerLayout.visibility = View.GONE
+        fragmentContainer.visibility = View.VISIBLE
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, CompetitionsFragment())
             .commit()
     }
 }

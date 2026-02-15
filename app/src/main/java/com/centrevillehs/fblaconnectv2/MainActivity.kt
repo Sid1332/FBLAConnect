@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
             showNewsListView()
         }
         findViewById<LinearLayout>(R.id.categoryResources).setOnClickListener {
-            showResourcesView()
+            startActivity(Intent(this, ResourcesActivity::class.java))
         }
         findViewById<LinearLayout>(R.id.categorySocial).setOnClickListener {
             showSocialPopup()
@@ -200,4 +200,9 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragmentContainer, PostNewsFragment())
             .commit()
     }
+private fun openUrl(url: String) {
+    val intent = Intent(Intent.ACTION_VIEW)
+    intent.data = android.net.Uri.parse(url)
+    startActivity(intent)
+}
 }

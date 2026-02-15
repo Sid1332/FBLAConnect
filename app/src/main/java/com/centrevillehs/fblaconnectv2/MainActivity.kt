@@ -65,7 +65,8 @@ class MainActivity : AppCompatActivity() {
             showProfileView()
         }
         findViewById<LinearLayout>(R.id.categoryCompetition).setOnClickListener {
-            openUrl("https://www.fbla.org/competitions/")
+            val intent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse("https://www.fbla.org/competitions/"))
+            startActivity(intent)
         }
         findViewById<LinearLayout>(R.id.categoryEvents).setOnClickListener {
             showEventsView()
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             showNewsListView()
         }
         findViewById<LinearLayout>(R.id.categoryResources).setOnClickListener {
-            startActivity(Intent(this, ResourcesActivity::class.java))
+            showResourcesView()
         }
         findViewById<LinearLayout>(R.id.categorySocial).setOnClickListener {
             showSocialPopup()
@@ -131,15 +132,18 @@ class MainActivity : AppCompatActivity() {
             .create()
 
         dialogView.findViewById<Button>(R.id.btnDialogInstagram).setOnClickListener {
-            openUrl("https://www.instagram.com/fbla_national/")
+            val intent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse("https://www.instagram.com/fbla_national/"))
+            startActivity(intent)
             dialog.dismiss()
         }
         dialogView.findViewById<Button>(R.id.btnDialogTwitter).setOnClickListener {
-            openUrl("https://x.com/FBLA_National")
+            val intent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse("https://x.com/FBLA_National"))
+            startActivity(intent)
             dialog.dismiss()
         }
         dialogView.findViewById<Button>(R.id.btnDialogFacebook).setOnClickListener {
-            openUrl("https://www.facebook.com/FutureBusinessLeaders/")
+            val intent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse("https://www.facebook.com/FutureBusinessLeaders/"))
+            startActivity(intent)
             dialog.dismiss()
         }
         dialog.show()
@@ -182,7 +186,10 @@ class MainActivity : AppCompatActivity() {
 
     fun showResourcesView() {
         hideAll()
-        showResources(contentText, socialMediaButtons, contentArea, calendarContainer)
+        fragmentContainer.visibility = View.VISIBLE
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, ResourcesFragment())
+            .commit()
     }
 
     fun showAddEventView() {
@@ -200,9 +207,4 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragmentContainer, PostNewsFragment())
             .commit()
     }
-private fun openUrl(url: String) {
-    val intent = Intent(Intent.ACTION_VIEW)
-    intent.data = android.net.Uri.parse(url)
-    startActivity(intent)
-}
 }

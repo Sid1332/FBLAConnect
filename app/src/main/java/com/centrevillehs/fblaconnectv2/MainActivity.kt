@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.centrevillehs.fblaconnectv2.ui.main.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,9 +22,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var headerLayout: LinearLayout
     private lateinit var dashboardView: ScrollView
     private lateinit var calendarContainer: LinearLayout
+    private lateinit var contentArea: ScrollView
     private lateinit var socialMediaButtons: LinearLayout
     private lateinit var calendarView: CalendarView
-    private lateinit var eventDetailsText: TextView
+    private lateinit var noEventsText: TextView
+    private lateinit var recyclerViewEvents: RecyclerView
     private lateinit var fragmentContainer: FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,9 +50,11 @@ class MainActivity : AppCompatActivity() {
         headerLayout = findViewById(R.id.headerLayout)
         dashboardView = findViewById(R.id.dashboardView)
         calendarContainer = findViewById(R.id.calendarContainer)
+        contentArea = findViewById(R.id.contentArea)
         socialMediaButtons = findViewById(R.id.socialMediaButtons)
         calendarView = findViewById(R.id.calendarView)
-        eventDetailsText = findViewById(R.id.eventDetailsText)
+        noEventsText = findViewById(R.id.noEventsText)
+        recyclerViewEvents = findViewById(R.id.recyclerViewEvents)
         fragmentContainer = findViewById(R.id.fragmentContainer)
 
         // Setup Header
@@ -159,6 +164,7 @@ class MainActivity : AppCompatActivity() {
         calendarContainer.visibility = View.GONE
         fragmentContainer.visibility = View.GONE
         socialMediaButtons.visibility = View.GONE
+        contentArea.visibility = View.GONE
     }
 
     fun showDashboardView() {
@@ -177,7 +183,7 @@ class MainActivity : AppCompatActivity() {
 
     fun showEventsView() {
         hideAll()
-        calendarContainer.visibility = View.VISIBLE
+        showEventsCalendar(calendarView, noEventsText, recyclerViewEvents, calendarContainer)
     }
 
     fun showNewsListView() {

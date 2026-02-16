@@ -230,44 +230,43 @@
             android:orientation="vertical"
             android:visibility="gone">
             <CalendarView android:id="@+id/calendarView" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="16dp" />
-            <ScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
-                <TextView android:id="@+id/eventDetailsText" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="20dp" android:textSize="16sp" android:text="👆 Select a date to view events" />
-            </ScrollView>
-        </LinearLayout>
 
-        <LinearLayout
-                android:id="@+id/socialMediaButtons"
+            <TextView
+                android:id="@+id/noEventsText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
                 android:padding="20dp"
-                android:visibility="gone">
-            <Button
-                android:id="@+id/btnInstagram"
-                android:layout_width="0dp"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:fontFamily="@font/raleway"
+                android:text="👆 Select a date to view events" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewEvents"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="📷 IG"
-                android:layout_margin="5dp"
-                android:backgroundTint="@color/fbla_blue" />
-            <Button
-                android:id="@+id/btnTwitter"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="🐦 TW"
-                android:layout_margin="5dp"
-                android:backgroundTint="@color/fbla_blue" />
-            <Button
-                android:id="@+id/btnFacebook"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="👍 FB"
-                android:layout_margin="5dp"
-                android:backgroundTint="@color/fbla_blue" />
+                android:padding="8dp"
+                android:clipToPadding="false"
+                android:visibility="gone" />
         </LinearLayout>
+
+        <!-- Old Content Area (for Profile, News, Resources) -->
+        <ScrollView
+            android:id="@+id/contentArea"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="gone">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView android:id="@+id/contentText" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="40dp" android:textSize="18sp" android:text="Loading..." />
+                <LinearLayout android:id="@+id/socialMediaButtons" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center" android:padding="20dp" android:visibility="gone">
+                    <Button android:id="@+id/btnInstagram" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="📷 IG" android:layout_margin="5dp" android:backgroundTint="@color/fbla_blue" />
+                    <Button android:id="@+id/btnTwitter" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="🐦 TW" android:layout_margin="5dp" android:backgroundTint="@color/fbla_blue" />
+                    <Button android:id="@+id/btnFacebook" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="👍 FB" android:layout_margin="5dp" android:backgroundTint="@color/fbla_blue" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
 
         <!-- Bottom Navigation -->
         <com.google.android.material.bottomnavigation.BottomNavigationView

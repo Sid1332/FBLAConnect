@@ -28,17 +28,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var noEventsText: TextView
     private lateinit var recyclerViewEvents: RecyclerView
     private lateinit var fragmentContainer: FrameLayout
+    private lateinit var txtUserName: TextView
+    private lateinit var profileImageLetter: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Check if logged in
         val prefs = getSharedPreferences("FBLAPrefs", MODE_PRIVATE)
-        firstName = prefs.getString("firstName", "") ?: ""
-        lastName = prefs.getString("lastName", "") ?: ""
         memberID = prefs.getString("memberID", "") ?: ""
 
-        if (firstName.isEmpty()) {
+        if (memberID.isEmpty()) {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
             return
@@ -56,14 +56,10 @@ class MainActivity : AppCompatActivity() {
         noEventsText = findViewById(R.id.noEventsText)
         recyclerViewEvents = findViewById(R.id.recyclerViewEvents)
         fragmentContainer = findViewById(R.id.fragmentContainer)
+        txtUserName = findViewById(R.id.txtUserName)
+        profileImageLetter = findViewById(R.id.profileImageLetter)
 
-        // Setup Header
-        val txtUserName = findViewById<TextView>(R.id.txtUserName)
-        txtUserName.text = "$firstName $lastName"
-        val profileImageLetter = findViewById<TextView>(R.id.profileImageLetter)
-        if (firstName.isNotEmpty()) {
-            profileImageLetter.text = firstName.substring(0, 1).uppercase()
-        }
+        updateHeader()
 
         // Setup Category Click Listeners
         findViewById<LinearLayout>(R.id.categoryRegistration).setOnClickListener {
@@ -95,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         userDocument.get().addOnSuccessListener { doc ->
             val organizationId = doc.getString("OrganizationId") ?: return@addOnSuccessListener
             val organizationDocument = db.collection("Organizations").document(organizationId)
-            
+
             organizationDocument.get().addOnSuccessListener { orgDoc ->
                 if (!orgDoc.exists()) return@addOnSuccessListener
                 val administratorsRaw = orgDoc.get("adminIds")
@@ -104,12 +100,12 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     emptyList()
                 }
-                
+
                 if (memberID in administrators) {
                     isAdmin = true
                     categoryAddEvent.visibility = View.VISIBLE
                     categoryPostNews.visibility = View.VISIBLE
-                    
+
                     categoryAddEvent.setOnClickListener { showAddEventView() }
                     categoryPostNews.setOnClickListener { showPostNewsView() }
                 } else {
@@ -132,6 +128,17 @@ class MainActivity : AppCompatActivity() {
 
         // Start with Dashboard
         showDashboardView()
+    }
+
+    fun updateHeader() {
+        val prefs = getSharedPreferences("FBLAPrefs", MODE_PRIVATE)
+        firstName = prefs.getString("firstName", "") ?: ""
+        lastName = prefs.getString("lastName", "") ?: ""
+
+        txtUserName.text = "$firstName $lastName"
+        if (firstName.isNotEmpty()) {
+            profileImageLetter.text = firstName.substring(0, 1).uppercase()
+        }
     }
 
     private fun showSocialPopup() {
